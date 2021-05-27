@@ -1,0 +1,6 @@
+django
+psycopg2-binary=2.8.6
+djangorestframework=3.12.4
+django-filter=2.4.0
+pytest
+pytest-django

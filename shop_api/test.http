@@ -1,0 +1,37 @@
+GET http://localhost:8000/api/v1/product-reviews/
+Accept: application/json
+
+###
+POST http://localhost:8000/api/v1/product-reviews/
+Accept: application/json
+Authorization: Token c2decd3ddcc8c5a85a9b02e388327be99883f976
+
+{
+  "product":  1,
+  "text": "new",
+  "rating": 3
+}
+###
+
+PATCH http://localhost:8000/api/v1/product-reviews/1/
+Accept: application/json
+Authorization: Token 5a1ea8854fcad1d8b8c5e33359433695432ed183
+
+{
+  "text": "changed text",
+  "rating": 2
+}
+
+###
+GET http://localhost:8000/api/v1/products/
+Accept: application/json
+
+###
+
+POST http://localhost:8000/api/v1/products/
+Accept: application/json
+Authorization: Token c2decd3ddcc8c5a85a9b02e388327be99883f976
+
+{"name": "kinda", "price": 1}
+
+###
