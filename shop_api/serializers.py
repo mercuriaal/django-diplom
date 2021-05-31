@@ -47,13 +47,35 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
 
+    user = UserSerializer(
+        read_only=True
+    )
+
     class Meta:
         model = Order
         fields = ['user', 'status', 'total_price', 'positions', 'created_at', 'updated_at']
 
     def create(self, validated_data):
-        validated_data["positions"] = ''  # вообще непонятно
+        order_price = 0
+        for position in validated_data['positions']:
+            queryset = Product.objects.filter(id=position['product']).values('price')
+            product_price = queryset[0]['price']
+            order_price += product_price * position['quantity']
+        validated_data["total_price"] = order_price
+        validated_data["user"] = self.context["request"].user
         return super().create(validated_data)
+
+    def validate_positions(self, data):
+        if not data:
+            raise serializers.ValidationError('Заказ не может быть пустым')
+        for position in data:
+            product_id = position.get('product')
+            quantity = position.get('quantity')
+            if isinstance(product_id, int) is False or product_id is None:
+                raise serializers.ValidationError('В позиции неправильно указан товар')
+            if isinstance(quantity, int) is False or quantity is None or quantity == 0:
+                raise serializers.ValidationError('В позиции неправильно указано количество товара')
+        return data
 
 
 class CollectionSerializer(serializers.ModelSerializer):
