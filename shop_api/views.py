@@ -1,3 +1,4 @@
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, SAFE_METHODS
 from django_filters.rest_framework import DjangoFilterBackend
@@ -44,14 +45,22 @@ class OrderViewSet(ModelViewSet):
     filterset_class = OrderFilter
 
     def get_permissions(self):
-        if self.action in ["list", "retrieve"]:
+        if self.action in ["retrieve"]:
             return [IsOwnerOrAdmin()]
-        if self.action in ["create"]:
+        if self.action in ["create", "list"]:
             return [IsAuthenticated()]
         if self.action in ["update", "partial_update", "destroy"]:
             return [IsAdminUser()]
         return []
 
+    def list(self, request, *args, **kwargs):
+        if request.user.is_staff:
+            return super().list(request, *args, **kwargs)
+        else:
+            user_id = request.user.id
+            filtered_orders = Order.objects.filter(user=user_id)
+            serializer = OrderSerializer(filtered_orders, many=True)
+            return Response(serializer.data)
 
 class CollectionViewSet(ModelViewSet):
 
