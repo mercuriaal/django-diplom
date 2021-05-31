@@ -24,6 +24,7 @@ router = DefaultRouter()
 router.register('products', views.ProductViewSet, basename='products')
 router.register('product-reviews', views.ReviewViewSet, basename='reviews')
 router.register('orders', views.OrderViewSet, basename='orders')
+router.register('collections', views.CollectionViewSet, basename='collections')
 
 urlpatterns = [
     path('api/v1/', include(router.urls)),
