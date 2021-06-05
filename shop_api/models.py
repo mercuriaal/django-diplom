@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -91,8 +92,9 @@ class Order(models.Model):
         on_delete=models.CASCADE
     )
 
-    positions = models.JSONField(
-        verbose_name='Позиции заказа'
+    positions = models.ManyToManyField(
+        Product,
+        through='OrderedProducts'
     )
 
     status = models.CharField(
@@ -103,7 +105,8 @@ class Order(models.Model):
     )
 
     total_price = models.IntegerField(
-        verbose_name='Общая сумма заказа'
+        verbose_name='Общая сумма заказа',
+        default=0
     )
 
     created_at = models.DateField(
@@ -121,6 +124,23 @@ class Order(models.Model):
 
     def __str__(self):
         return f'Заказ пользователя {self.user} на сумму {self.total_price}'
+
+
+class OrderedProducts(models.Model):
+
+    order = models.ForeignKey(
+        Order,
+        related_name='ordered_products',
+        on_delete=models.CASCADE
+    )
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE
+    )
+
+    quantity = models.PositiveIntegerField(
+        verbose_name='Количество товара'
+    )
 
 
 class Collection(models.Model):
