@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -16,7 +15,7 @@ class Product(models.Model):
         verbose_name='Описание товара',
         blank=True
     )
-    price = models.IntegerField(
+    price = models.PositiveIntegerField(
         verbose_name='Цена',
     )
     reviews = models.ManyToManyField(
@@ -104,9 +103,9 @@ class Order(models.Model):
         default=NEW
     )
 
-    total_price = models.IntegerField(
+    total_price = models.PositiveIntegerField(
         verbose_name='Общая сумма заказа',
-        default=0
+        default=1
     )
 
     created_at = models.DateField(
@@ -155,7 +154,9 @@ class Collection(models.Model):
         verbose_name='Текст'
     )
 
-    products = models.JSONField(
+    products = models.ManyToManyField(
+        Product,
+        related_name='collections',
         verbose_name='Товары в подборке'
     )
 
