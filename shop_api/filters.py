@@ -19,12 +19,14 @@ class ReviewFilter(filters.FilterSet):
 class OrderFilter(filters.FilterSet):
 
     price = filters.RangeFilter(field_name='total_price')
-    positions = filters.NumberFilter(field_name='positions', method='products_filter')
+    ordered_products = filters.NumberFilter(field_name='ordered_products', method='products_filter')
+    creation = filters.DateFromToRangeFilter(field_name='created_at')
+    update = filters.DateFromToRangeFilter(field_name='updated_at')
 
     class Meta:
         model = Order
         fields = ["status", "created_at", "updated_at"]
 
     def products_filter(self, queryset, name, value):
-        query = queryset.filter(positions__contains=[{"product":int(value)}])
+        query = queryset.filter(ordered_products__product=value)
         return query
