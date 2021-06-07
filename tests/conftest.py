@@ -34,3 +34,17 @@ def review_factory():
     def factory(**kwargs):
         return baker.make("Review", **kwargs)
     return factory
+
+
+@pytest.fixture()
+def order_factory():
+    def factory(**kwargs):
+        return baker.make("Order", **kwargs)
+    return factory
+
+
+@pytest.fixture()
+def collection_factory():
+    def factory(**kwargs):
+        return baker.make("Collection", **kwargs)
+    return factory
