@@ -40,7 +40,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         user = self.context["request"].user
         product = data.get("product")
         check_duplicate = Review.objects.filter(user=user, product=product)
-        if check_duplicate.count() > 1:
+        if check_duplicate.exists():
             raise serializers.ValidationError('Нельзя оставлять более одного отзыва.')
         return data
 
