@@ -57,8 +57,9 @@ class OrderViewSet(ModelViewSet):
         if request.user.is_staff:
             return super().list(request, *args, **kwargs)
         else:
+            queryset = self.filter_queryset(self.get_queryset())
             user_id = request.user.id
-            filtered_orders = Order.objects.filter(user=user_id)
+            filtered_orders = queryset.filter(user=user_id)
             serializer = OrderSerializer(filtered_orders, many=True)
             return Response(serializer.data)
 
