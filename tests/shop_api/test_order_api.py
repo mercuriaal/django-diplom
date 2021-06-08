@@ -16,7 +16,7 @@ def test_retrieve_positive(api_client, order_factory, user_factory, token_factor
     response = client.get(url)
     response_json = response.json()
     assert response.status_code == status.HTTP_200_OK
-    assert len(response_json) == 1
+    assert isinstance(response_json, dict)
     assert response_json['user']['id'] == user.id
 
 
@@ -83,7 +83,7 @@ def test_list_auth_permission(api_client, order_factory):
 def test_create_validations(api_client, user_factory, token_factory, product_factory,
                             test_product_quantity, http_response):
     user = user_factory()
-    product = product_factory()
+    product = product_factory(price=10)
     token = token_factory(user_id=user.id)
     url = reverse("orders-list")
     payload = {
