@@ -63,13 +63,13 @@ class OrderViewSet(ModelViewSet):
             serializer = OrderSerializer(filtered_orders, many=True)
             return Response(serializer.data)
 
+
 class CollectionViewSet(ModelViewSet):
 
     queryset = Collection.objects.all()
     serializer_class = CollectionSerializer
 
     def get_permissions(self):
-        if self.action not in SAFE_METHODS:
+        if self.action in ["create", "update", "partial_update", "destroy"]:
             return [IsAdminUser()]
-        else:
-            return True
+        return []
