@@ -1,0 +1,53 @@
+[
+  {
+    "model": "shop_api.product",
+    "pk": 1,
+    "fields": {
+      "name": "Карниз 1 ряд 300 см",
+      "description": "Карниз металлический квадро Carrara, штанга квадратного сечения 20 мм , цвет матовый хром",
+      "price": 7150,
+      "created_at": "2021-06-08",
+      "updated_at": "2021-06-08"
+    }
+  },
+  {
+    "model": "shop_api.product",
+    "pk": 2,
+    "fields": {
+      "name": "Карниз 2 ряда 100 см",
+      "description": "Карниз металлический Лукка,  2-рядный, антик, 100 см, 25 мм рифленая первая труба, 16 мм гладкая вторая труба",
+      "price": 3180,
+      "created_at": "2021-06-08",
+      "updated_at": "2021-06-08"
+    }
+  },
+  {
+    "model": "shop_api.product",
+    "pk": 3,
+    "fields": {
+      "name": "Карниз 2 ряда 160 см",
+      "description": "Карниз металлический Твистер,  2-рядный, антик, 160 см, 25 мм рифленая первая труба, 16 мм гладкая вторая труба",
+      "price": 5000,
+      "created_at": "2021-06-08",
+      "updated_at": "2021-06-08"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$C2g2kfEKLqLZEf3yUj7Sen$xqCbuQHS0BoyWqOn33pcptiHa51w+e/521Gh7dg+Hmw=",
+      "last_login": "2021-06-06T10:38:38.748Z",
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "email": "admin@admin.ru",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2021-05-20T19:58:04.428Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]
